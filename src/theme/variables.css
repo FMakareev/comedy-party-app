@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700&display=swap');
+
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
@@ -74,6 +76,30 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /** fonts */
+  --ion-font-family: 'Manrope', sans-serif;
+
+  /* Размер текста */
+  --size-text-base: 16px;
+
+  --size-text-xs: 0.7em;
+  --size-text-s: 0.8em;
+  --size-text-m: 1em;
+  --size-text-l: 1.125em;
+  --size-text-xl: 1.25em;
+  --size-text-2xl: 1.5em;
+  --size-text-3xl: 2em;
+  --size-text-4xl: 3em;
+  --size-text-5xl: 4.5em;
+  --size-text-6xl: 6em;
+
+  /* Межстрочный интервал */
+  --line-height-text-xs: 1.2em;
+  --line-height-text-s: 1.4em;
+  --line-height-text-m: 1.5em;
+  --line-height-text-l: 1.6em;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -229,4 +255,23 @@ http://ionicframework.com/docs/theming/ */
 
     --ion-card-background: #1e1e1e;
   }
+}
+
+.ion-content { --background: transparent;}
+
+html {
+  font-size: var(--size-text-base);
+}
+* {
+  font-family: var(--ion-font-family);
+  --color: #282930;
+}
+
+.size-text-base {
+  font-size: var(--size-text-base);
+  visibility: visible;
+}
+.is-visibility-hidden {
+  visibility: hidden;
+
 }

@@ -1,0 +1,9 @@
+
+.question-card_wrapper {
+    border-radius: 16px;
+}
+
+.question-card_text {
+    font-size: var(--size-text-l);
+    line-height: var(--size-text-xl);
+}

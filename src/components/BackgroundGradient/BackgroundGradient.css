@@ -1,0 +1,11 @@
+
+.background-gradient {
+    background: linear-gradient(162.44deg, #FD80A8 0%, #FCCE42 100%), #FFFFFF !important;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    visibility: visible !important;
+}

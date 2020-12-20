@@ -1,0 +1,5 @@
+.current-theme-and-question-counter_label {
+    font-size: var(--size-text-l);
+    line-height: var(--size-text-xl);
+    color: var(--ion-color-primary-contrast);
+}

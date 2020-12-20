@@ -1,9 +1,13 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet } from '@ionic/react';
+import { Route } from 'react-router-dom';
+import {IonApp, IonGrid} from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
+import { Provider } from 'react-redux'
+import {store} from './store/store';
 
+import {routes} from './pages/routes';
+
+//<editor-fold desc="IONIC CSS">
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -22,16 +26,20 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import {BackgroundGradient} from "./components/BackgroundGradient/BackgroundGradient";
+//</editor-fold>
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/home" component={Home} exact={true} />
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+  <Provider store={store}>
+    <IonApp>
+      <BackgroundGradient/>
+      <IonReactRouter basename={'/'}>
+        {
+          routes.map((route, index) => <Route {...route} key={index} />)
+        }
+      </IonReactRouter>
+    </IonApp>
+  </Provider>
 );
 
 export default App;
