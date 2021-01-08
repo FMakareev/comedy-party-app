@@ -1,0 +1,12 @@
+.game-board-header_icon {
+    width: 40px;
+    margin-left: -6px;
+}
+.game-board-header_label {
+    margin-left: 6px;
+    font-size: var(--size-text-s);
+    line-height: var(--size-text-xl);
+    color: var(--ion-color-primary-contrast);
+    font-family: var(--ion-font-heading);
+    text-transform: uppercase;
+}

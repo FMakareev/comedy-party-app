@@ -1,0 +1,10 @@
+
+.question-card_wrapper {
+    border-radius: 16px;
+    --ion-background-color: #ffffff;
+}
+
+.question-card_text {
+    font-size: var(--size-text-l);
+    line-height: var(--size-text-xl);
+}

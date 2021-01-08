@@ -1,6 +1,5 @@
 
-.background-gradient {
-    background: linear-gradient(162.44deg, #FD80A8 0%, #FCCE42 100%), #FFFFFF !important;
+.custom-background {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -8,4 +7,16 @@
     left: 0;
     z-index: 0;
     visibility: visible !important;
+}
+
+.custom-background_gradient {
+    background: linear-gradient(162.44deg, #FD80A8 0%, #FCCE42 100%), #FFFFFF !important;
+}
+
+.custom-background_image {
+    background-color: #EBA177;
+    background-image: url("../../assets/background-mobile.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }

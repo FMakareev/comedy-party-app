@@ -1,14 +1,18 @@
 import { RouteProps } from "react-router";
 import {Home} from './home/Home';
-import { GameBoardPage } from "./game-board/GameBoardPage";
-import {NewGameBoard} from "./newGameBoard";
+
+import {routes as cleverestRoutes} from './the-cleverest/routes';
+import {routes as blitzRoutes} from './blitz/routes';
+import { routes as questionLibraryRoutes } from "./question-library/routes";
 
 export const routes: RouteProps[] = [
-  {
-    path: '/game-board',
-    exact: true,
-    component: NewGameBoard,
-  },
+
+  ...blitzRoutes,
+  ...cleverestRoutes,
+  ...questionLibraryRoutes,
+
+
+
   {
     path: '/',
     exact: true,

@@ -1,7 +1,8 @@
 import {createSlice, PayloadAction, SliceCaseReducers} from '@reduxjs/toolkit'
-import {get} from 'lodash';
+import {has} from 'lodash';
 import {SCORE_TABLE_REDUCER_NAME} from "./const";
-import {GameScore} from '../../types';
+import {GameScore, Player, PlayerScore} from '../../types';
+import {playerScoreCompareByPlayerId} from "../../utilities";
 
 
 export type State = {
@@ -11,12 +12,17 @@ export type State = {
 }
 
 const initialState = {
-  gameMap: {},
+  gameMap: {}
 }
 
-export type Actions = {
-
+export type ScoreTableStateActions = {
+  setGameScore: (props: {
+    gameId: string;
+    player: Player;
+    score: number;
+  }) => any;
 }
+
 
 export const scoreTableState = createSlice<State, SliceCaseReducers<State>, string>({
   name: SCORE_TABLE_REDUCER_NAME,
@@ -24,17 +30,37 @@ export const scoreTableState = createSlice<State, SliceCaseReducers<State>, stri
   reducers: {
     setGameScore: (state: State, {payload}: PayloadAction<{
       gameId: string;
-      playerId: string;
+      player: Player;
       score: number;
     }>) => {
-      const gameScore = get(state.gameMap, [payload.gameId, 'players', payload.playerId]);
-      if (gameScore) {
-        gameScore.score += payload.score
+
+      if (has(state.gameMap, [payload.gameId])) {
+        const players: PlayerScore[] = state.gameMap[payload.gameId].players
+
+        const targetIndex = players.findIndex(playerScoreCompareByPlayerId(payload.player.id))
+
+        if (targetIndex !== -1) {
+          players[targetIndex].score += payload.score;
+        } else {
+          players.push({
+            score: payload.score,
+            player: payload.player,
+          })
+        }
+
       } else {
-        console.error(`not found game by gameId=${payload.gameId}, playerId=${payload.playerId}`)
+        state.gameMap[payload.gameId] = {
+          id: payload.gameId,
+          players: [
+            {
+              score: payload.score,
+              player: payload.player,
+            }
+          ]
+        }
       }
     },
   }
 })
 
-export const Actions: Actions = scoreTableState.actions as unknown as Actions;
+export const ScoreTableStateActions: ScoreTableStateActions = scoreTableState.actions as unknown as ScoreTableStateActions;

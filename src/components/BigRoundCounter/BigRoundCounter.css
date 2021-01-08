@@ -1,0 +1,19 @@
+
+.big-round-counter_wrapper {
+    position: relative;
+    text-align: center;
+}
+.big-round-counter_count {
+    font-weight: bolder;
+    font-size: 40px;
+    opacity: 0.6;
+    color: #ffffff;
+}
+.big-round-counter_label {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    text-transform: uppercase;
+}

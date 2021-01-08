@@ -1,104 +1,144 @@
 import {createSlice, nanoid, PayloadAction, SliceCaseReducers} from '@reduxjs/toolkit'
 import {GAME_STATE_REDUCER_NAME} from "./const";
-import {Player, GameScore, Task} from '../../types';
+import {Player, Question, QuestionTag} from '../../types';
+
+
+export type GameConfig = {
+  /** кол-во попыток игрока */
+  playerAttempts: number;
+  /** кол-во вопросов в раунде */
+  questionCountInRound: number;
+  /** кол-во раундов */
+  roundsCount: number;
+  /** игрок с наименьшим кол-вом очков начинает новый раунд */
+  isStartWithLowPoints: boolean;
+}
 
 export type State = {
-  gameScore: GameScore | null;
-  gameIsStart: boolean;
-  gameIsEnd: boolean;
-  indexCurrentPlayer: number;
-  indexCurrentTask: number;
-  attempts: number;
-  gameTasks: Task[];
+  gameConfig: GameConfig;
+  gameId: string;
+  players: Player[];
+
+  currentPlayer: number;
+  currentQuestion: number;
+  currentRound: number;
+
+  playerAttempts: number;
+  themeHistory: QuestionTag[];
+  gameQuestions: Question[];
+
+  showAnswer: boolean;
 }
 
 const initialState = {
-  gameScore: null,
-  gameIsStart: false,
-  gameIsEnd: false,
-  indexCurrentPlayer: 0,
-  indexCurrentTask: 0,
-  attempts: 3,
-  gameTasks: [],
+  gameConfig: {
+    playerAttempts: 3,
+    roundsCount: 2,
+    questionCountInRound: 10,
+    isStartWithLowPoints: true,
+  },
+  gameId: nanoid(),
+  players: [],
+  currentPlayer: 0,
+  playerAttempts: 3,
+
+  currentQuestion: 0,
+  currentRound: 0,
+
+  themeHistory: [],
+  gameQuestions: [],
+
+  showAnswer: false,
 }
 
-export type Actions = {
-  createNewGame: (props: { players: Player[]; gameTasks: Task[] }) => any;
-  nextPlayer: (props: { score: number }) => any;
-  nextTask: () => any;
+export type GameStateActions = {
+  createNewGame: () => any;
+  addPlayers: (players: Player[]) => any;
+  setNewGameConfig: (config: GameConfig) => any;
+  addGameQuestions: (gameQuestions: Question[]) => any;
+  changeTheme: (newTheme: QuestionTag) => any;
+  changeCurrentPlayer: (playerIndex: number) => any;
+  nextQuestion: () => any;
+  nextRound: () => any;
+  nextAttempts: () => any;
+  resetAttempts: () => any;
+  nextPlayer: () => any;
+  changeShowAnswer: (isShow: boolean) => any;
 }
 
-/**
- * @desc редьюсер отвечает за состояние партии, на начало партии состояние пустое,
- * в конце партии состояние партии целым объектом сохраняется в состояние scoreTable.
- * В состояние партии входит:
- * 1. список участников, копируется из state.players
- * 2. кто ходит сейчас?
- * 3. список вопросов, копируется из state.gameTasks
- * 4. какой сейчас вопрос?
- * 5. началась ли игра?
- * 6. показать ответ TODO
- * */
 export const gameState = createSlice<State, SliceCaseReducers<State>, string>({
   name: GAME_STATE_REDUCER_NAME,
   initialState: initialState,
   reducers: {
-
-    createNewGame: (state: State, {payload}: PayloadAction<{ players: Player[]; gameTasks: Task[] }>) => {
-
-      const gameScore = {
-        id: nanoid(),
-        players: payload.players.reduce((accum: any[], item: Player) => {
-          accum.push({
-            score: 0,
-            player: item,
-          });
-          return accum;
-        }, [])
-      };
-
-      state.gameIsStart = true;
-      state.gameIsEnd = false;
-      state.gameTasks = payload.gameTasks;
-
-      state.gameScore = gameScore;
+    createNewGame: (state: State) => {
+      state.gameId = nanoid();
+      state.players = initialState.players;
+      state.currentPlayer = initialState.currentPlayer;
+      state.playerAttempts = initialState.playerAttempts;
+      state.currentQuestion = initialState.currentQuestion;
+      state.currentRound = initialState.currentRound;
+      state.themeHistory = initialState.themeHistory;
+      state.gameQuestions = initialState.gameQuestions;
+      state.showAnswer = initialState.showAnswer;
     },
 
-    nextTask: (state: State) => {
-      if (state.indexCurrentTask < state.gameTasks.length - 1) {
-        state.indexCurrentTask += 1;
-      } else {
-        state.gameIsEnd = true;
-        state.gameIsStart = false;
+    setNewGameConfig: (state: State, {payload}: PayloadAction<GameConfig> )=> {
+      state.gameConfig = payload;
+    },
+
+    changeTheme: (state: State,  {payload}: PayloadAction<QuestionTag>) => {
+      state.themeHistory.push(payload);
+    },
+
+    addPlayers: (state: State, {payload}: PayloadAction<Player[]>) => {
+      state.players = payload;
+    },
+
+    addGameQuestions: (state: State, {payload}: PayloadAction<Question[]>) => {
+      state.gameQuestions = payload;
+      state.currentQuestion = 0;
+    },
+
+    changeShowAnswer: (state: State, {payload}: PayloadAction<boolean>) => {
+      state.showAnswer = payload;
+    },
+
+    nextQuestion: (state: State) => {
+      if (state.currentQuestion < state.gameQuestions.length - 1) {
+        state.currentQuestion += 1;
       }
     },
-    /**
-     * @desc следующая попытка игрока, получает на вход кол-во полученных балов за текущую задачу
-     * если оно === 0, то попытки сбрасываются и ход переходит к другому игроку
-     * иначе делает инкримент очков у игрока и уменьшает кол-во попыток,
-     * если после уменьшения кол-во попыток === 0, то
-     * ход переходит к следующему игроку.
-     * */
-    nextPlayer: (state: State, {payload}: PayloadAction<{ score: number }>) => {
-      if (!state.gameScore) {
-        return;
-      }
-      if (payload.score > 0 && state.attempts > 1) {
-        state.attempts -= 1;
-        state.gameScore.players[state.indexCurrentPlayer].score += payload.score;
+
+    nextRound: (state: State) => {
+      state.currentRound += 1;
+    },
+
+    nextAttempts: (state: State) => {
+      if (state.playerAttempts <= 1) {
+        state.playerAttempts = state.gameConfig.playerAttempts;
       } else {
-        state.attempts = 3;
-        if (state?.gameScore && state.gameScore.players.length > 0) {
-          if (state.indexCurrentPlayer >= state.gameScore.players.length - 1) {
-            state.indexCurrentPlayer = 0;
-          } else {
-            state.indexCurrentPlayer += 1;
-          }
-        }
+        state.playerAttempts -= 1;
+      }
+    },
+
+    resetAttempts: (state: State) => {
+      state.playerAttempts = state.gameConfig.playerAttempts;
+    },
+
+    changeCurrentPlayer: (state: State, {payload}: PayloadAction<number>) => {
+      state.currentPlayer = payload;
+    },
+
+    nextPlayer: (state: State) => {
+      const length = state.players.length;
+      if (state.currentPlayer < length - 1) {
+        state.currentPlayer += 1;
+      } else {
+        state.currentPlayer = 0;
       }
     },
   },
   extraReducers: {}
 })
 
-export const Actions: Actions = gameState.actions as unknown as Actions;
+export const GameStateActions: GameStateActions = gameState.actions as unknown as GameStateActions;

@@ -1,0 +1,25 @@
+
+.card-player_wrapper {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 8px;
+    --ion-background-color: #fff;
+}
+
+
+.card-player_name-input {
+    border: none
+}
+.card-player_button {
+    width: 40px;
+    height: 40px;
+}
+.card-player_button--active {
+    background-color: #2e6a6a;
+}
+
+.card-player_name-input:focus {
+    outline: none;
+}

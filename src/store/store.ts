@@ -1,27 +1,44 @@
-import { configureStore } from '@reduxjs/toolkit'
+import {configureStore, combineReducers} from '@reduxjs/toolkit'
+import {persistReducer, persistStore} from 'redux-persist';
+import storage from 'redux-persist/lib/storage'
+import {gameState, State as GameState} from "./game-state/reducer";
 
-import {tasksSlice} from "./tasks/reducer";
+import {playersState, State as PlayersState} from './players/reducer';
 
-import {gameState} from "./game-state/reducer";
-import { GAME_STATE_REDUCER_NAME } from './game-state/const';
-
-import { playersState } from './players/reducer';
-import {PLAYERS_REDUCER_NAME} from "./players/const";
-
-import { scoreTableState } from './scoreTable/reducer';
-import { SCORE_TABLE_REDUCER_NAME } from './scoreTable/const';
-import { TASKS_REDUCER_NAME } from './tasks/const';
+import {questionsSlice, State as QuestionState} from "./questions/reducer";
+import {scoreTableState, State as ScoreTableState} from "./scoreTable/reducer";
 
 
-export const store = configureStore({
-  reducer: {
-    [TASKS_REDUCER_NAME]: tasksSlice.reducer,
-    [GAME_STATE_REDUCER_NAME]: gameState.reducer,
-    [PLAYERS_REDUCER_NAME]: playersState.reducer,
-    [SCORE_TABLE_REDUCER_NAME]: scoreTableState.reducer,
-  }
+export type Store = {
+  gameState: GameState;
+  players: PlayersState;
+  questions: QuestionState;
+  scoreTable: ScoreTableState;
+}
+const getPersistConfig = (key: string, blacklist?: string[]) => ({
+  key: key,
+  storage: storage,
+  blacklist
+});
+
+
+const createRootReducer = () => combineReducers({
+  // gameState: persistReducer(getPersistConfig('gameState'), gameState.reducer),
+  gameState: gameState.reducer,
+  scoreTable: persistReducer(getPersistConfig('scoreTable'), scoreTableState.reducer),
+  players: persistReducer(getPersistConfig('players'), playersState.reducer),
+  questions: persistReducer(getPersistConfig('questions', ['apiState']), questionsSlice.reducer)
 })
 
+export const createStore = () => {
+  return configureStore<any>({
+    reducer: persistReducer(getPersistConfig('root'), createRootReducer())
+  });
+}
+
+export const store = createStore();
+
+export const persistor = persistStore(store)
 
 
 

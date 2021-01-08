@@ -1,11 +1,14 @@
 import mockData from '../mocks/mock-data.json';
-import {Task} from "../types";
+import {Question} from "../types";
+import { nanoid } from '@reduxjs/toolkit';
+// import {delay} from "../utilities";
 
 export const tasksApi = {
-  getList: async (): Promise<Task[]> => {
-    return Promise.resolve(mockData.map((item: any): Task => ({
+  getList: async (): Promise<Question[]> => {
+    // await delay(2000);
+    return Promise.resolve(mockData.map((item: any): Question => ({
       ...item,
-      id: Date.now().toString()
+      id: nanoid(),
     })))
   },
 }

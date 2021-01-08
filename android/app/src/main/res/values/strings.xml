@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">comedy-party</string>
+    <string name="title_activity_main">comedy-party</string>
+    <string name="package_name">com.comedy.party.app</string>
+    <string name="custom_url_scheme">com.comedy.party.app</string>
+</resources>

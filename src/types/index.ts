@@ -1,12 +1,24 @@
-export enum TaskTag {
-  QUOTE = 'QUOTE', FACT = ' FACT', POEM = 'POEM', LAW = 'LAW'
+export enum QuestionTag {
+  QUOTE = 'QUOTE',
+  FACT = 'FACT',
+  POEM = 'POEM',
+  LAW = 'LAW'
 }
-
+/** @deprecated */
 export type Task = {
   id?: string;
-  tag: TaskTag;
+  tag: QuestionTag;
   question: string;
   answer: string;
+}
+
+export type Question = {
+  id?: string;
+  category: QuestionTag;
+  question: string;
+  answer: string;
+  author: string;
+  cleverest?: string;
 }
 
 
@@ -19,7 +31,7 @@ export enum ApiStateEnum {
 export type Player = {
   id: string;
   name: string;
-  color: string;
+  avatar: number;
 }
 
 export type PlayerScore = {
@@ -31,3 +43,9 @@ export type GameScore = {
   id: string;
   players: PlayerScore[];
 }
+
+export type AnyProps = {
+  [k: string]: any;
+}
+
+export type Maybe<T> = T | null | undefined;

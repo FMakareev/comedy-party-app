@@ -3,6 +3,6 @@ import './BackgroundGradient.css';
 
 export const BackgroundGradient: React.FC = () => {
   return (
-    <div className={'background-gradient'}/>
+    <div className={'custom-background custom-background_image'}/>
   );
 };

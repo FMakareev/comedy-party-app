@@ -1,0 +1,10 @@
+
+.card-add-player_wrapper {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 16px;
+    border: 1px dashed rgba(0, 0, 0, 0.5);
+    --ion-background-color: rgba(255, 255, 255, 0.75);
+}

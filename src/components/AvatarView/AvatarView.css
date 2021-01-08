@@ -1,0 +1,15 @@
+
+
+.avatar-view_placeholder {
+    background-color: #F0F1F5;
+    border-radius: 100px;
+}
+
+.avatar-view_sm {
+    width: 24px;
+    height: 24px;
+}
+.avatar-view_md {
+    width: 40px;
+    height: 40px;
+}

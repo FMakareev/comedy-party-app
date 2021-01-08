@@ -1,0 +1,8 @@
+.toolbar_wrapper {
+    --border-width: 0 !important;
+}
+
+.toolbar_title {
+    font-family: var(--ion-font-heading);
+    text-transform: uppercase;
+}

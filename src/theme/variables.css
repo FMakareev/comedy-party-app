@@ -5,21 +5,23 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 :root {
+
+
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #F0F1F5;
   --ion-color-primary-rgb: 56, 128, 255;
-  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast: #282930;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary-shade: #F0F1F5;
+  --ion-color-primary-tint: #F0F1F5;
 
   /** secondary **/
-  --ion-color-secondary: #3dc2ff;
+  --ion-color-secondary: transparent;
   --ion-color-secondary-rgb: 61, 194, 255;
-  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast: #282930;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #36abe0;
-  --ion-color-secondary-tint: #50c8ff;
+  --ion-color-secondary-shade: transparent;
+  --ion-color-secondary-tint: transparent;
 
   /** tertiary **/
   --ion-color-tertiary: #5260ff;
@@ -78,7 +80,9 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-tint: #f5f6f9;
 
   /** fonts */
-  --ion-font-family: 'Manrope', sans-serif;
+  --ion-font-body: 'Source Sans Pro', sans-serif;
+  --ion-font-family: 'Source Sans Pro', sans-serif;
+  --ion-font-heading: 'Montserrat', sans-serif;
 
   /* Размер текста */
   --size-text-base: 16px;
@@ -265,6 +269,11 @@ html {
 * {
   font-family: var(--ion-font-family);
   --color: #282930;
+  --ion-background-color: transparent;
+  --inner-border-width: 0;
+  --border-color: transparent;
+  --box-shadow: none;
+  box-shadow: var(--box-shadow);
 }
 
 .size-text-base {
@@ -273,5 +282,8 @@ html {
 }
 .is-visibility-hidden {
   visibility: hidden;
+}
 
+.btn-full {
+  width: 100%;
 }

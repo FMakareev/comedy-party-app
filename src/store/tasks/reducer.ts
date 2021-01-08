@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createSlice, SliceCaseReducers} from '@reduxjs/toolkit'
 import {ApiStateEnum, Task} from '../../types';
 import {fetchTaskListAction} from './actions';
 import { TASKS_REDUCER_NAME } from './const';
@@ -14,7 +14,8 @@ export type Actions = {
 };
 
 /** @desc задачи доступные для игры */
-export const tasksSlice = createSlice({
+/** @deprecated */
+export const tasksSlice = createSlice<State, SliceCaseReducers<State>, string>({
   name: TASKS_REDUCER_NAME,
   initialState: {
     tasks: [],
