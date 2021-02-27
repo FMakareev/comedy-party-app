@@ -1,5 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit";
 import { scoreTableState, ScoreTableStateActions } from "../reducer";
+import { Player } from "../../../types";
 
 const createMockStore = () => {
   return configureStore({
@@ -10,22 +11,23 @@ const createMockStore = () => {
 }
 
 describe('scoreTableState', () => {
-  it('test', () => {
+  it('must update the players score for the specified game', () => {
     const store: any = createMockStore();
     const gameID = '123';
     const gameIDTwo = '321';
-    const playerOne = {
+    const playerOne: Player = {
       id: '1',
       name: 'player 1',
-      color: '',
+      avatar: 0,
     };
-    const playerTwo = {
+    const playerTwo: Player = {
       id: '2',
       name: 'player 2',
-      color: '',
+      avatar: 0,
     };
 
 
+    //<editor-fold desc="Update playerOne score">
     store.dispatch(ScoreTableStateActions.setGameScore({
       gameId: gameID,
       player: playerOne,
@@ -59,7 +61,9 @@ describe('scoreTableState', () => {
         ]
       }
     })
+    //</editor-fold>
 
+    //<editor-fold desc="Update playerTwo score">
     store.dispatch(ScoreTableStateActions.setGameScore({
       gameId: gameIDTwo,
       player: playerTwo,
@@ -111,6 +115,7 @@ describe('scoreTableState', () => {
         ]
       }
     })
+    //</editor-fold>
 
   })
 

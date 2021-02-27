@@ -8,12 +8,13 @@ import {Question, QuestionTag, Maybe} from "../../../types";
 import {useSelector} from "react-redux";
 import {gameStateSelectors} from "../../../store/game-state/selectors";
 import {QuestionCard} from "../../../components/QuestionCard/QuestionCard";
-import {useMountTheme} from "../../../hooks/useMountTheme";
-import { useGetRandomCategory } from '../../../hooks/useGetRandomeCategory';
+import {useMountThemeAndQuestions} from "../../../hooks/useMountThemeAndQuestions/useMountThemeAndQuestions";
+import { useGetRandomCategory } from '../../../hooks/useGetRandomCategory/useGetRandomeCategory';
 
 export const BlitzRoundPage: React.FC<any> = () => {
+  const currentRound = useSelector(gameStateSelectors.getCurrentRound);
   const themeHistory: QuestionTag[] = useSelector(gameStateSelectors.getThemeHistory);
-  const theme = useGetRandomCategory({ excludeCategory: themeHistory });
+  const theme = useGetRandomCategory({ excludeCategory: themeHistory, currentRound });
   const currentQuestion: Maybe<Question> = useSelector(gameStateSelectors.getCurrentQuestion);
   const isShowAnswer: boolean = useSelector(gameStateSelectors.getIsShowAnswer);
 
@@ -21,7 +22,9 @@ export const BlitzRoundPage: React.FC<any> = () => {
   const getCurrentQuestionIndex: number = useSelector(gameStateSelectors.getCurrentQuestionIndex);
   const gameQuestions: Question[] = useSelector(gameStateSelectors.getGameQuestions);
 
-  useMountTheme(theme);
+  useMountThemeAndQuestions({
+    theme,
+  });
 
   return (<>
     <GameBoardHeader/>

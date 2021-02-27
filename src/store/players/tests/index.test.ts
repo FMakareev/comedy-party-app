@@ -1,8 +1,8 @@
-import {playersStateSelectors} from "../selectors";
+import {configureStore, EnhancedStore} from "@reduxjs/toolkit";
 import {range} from 'lodash';
+import {playersStateSelectors} from "../selectors";
 import {getRandomPlayer} from "../../../mocks/getRandomPlayer";
 import {PlayersStateActions, playersState} from "../reducer";
-import {configureStore, EnhancedStore} from "@reduxjs/toolkit";
 
 
 const fakePlayers = range(0, 3).map(getRandomPlayer);
@@ -23,13 +23,13 @@ describe('players', () => {
     STORE = createMockStore();
   })
 
-  it('должен получить список игроков из хранилища', () => {
+  it('should get the list of players from the storage', () => {
     fakePlayers.forEach((item) => STORE.dispatch(PlayersStateActions.addPlayer(item)));
 
     expect(playersStateSelectors.getPlayers(STORE.getState())).toEqual(fakePlayers);
   });
 
-  it('должен добавить нового игрока в хранилище', () => {
+  it('must add a new player to storage', () => {
 
     expect(playersStateSelectors.getPlayers(STORE.getState())).toEqual([])
 
@@ -39,35 +39,35 @@ describe('players', () => {
 
   })
 
-  it('должен добавить обновить игрока в хранилище', () => {
+  it('must add update player to storage', () => {
 
     STORE.dispatch(PlayersStateActions.addPlayer({
       name: 'name',
       id: '123',
-      color: '',
+      avatar: 0,
     }))
     expect(playersStateSelectors.getPlayers(STORE.getState())).toEqual([{
       name: 'name',
       id: '123',
-      color: '',
+      avatar: 0,
     }])
 
     STORE.dispatch(PlayersStateActions.addPlayer({
       name: 'name 2',
       id: '123',
-      color: '',
+      avatar: 0,
     }))
 
     expect(playersStateSelectors.getPlayers(STORE.getState())).toHaveLength(1);
     expect(playersStateSelectors.getPlayers(STORE.getState())).toEqual([{
       name: 'name 2',
       id: '123',
-      color: '',
+      avatar: 0,
     }])
 
   })
 
-  it('должен удалить игрока из хранилище', () => {
+  it('must remove the player from storage', () => {
 
     fakePlayers.forEach((item) => STORE.dispatch(PlayersStateActions.addPlayer(item)));
 
@@ -79,7 +79,7 @@ describe('players', () => {
     ])
   })
 
-  it('игрока должен быть изменен в хранилище', () => {
+  it('the player must be changed in the repository', () => {
     fakePlayers.forEach((item) => STORE.dispatch(PlayersStateActions.addPlayer(item)));
 
     const changedPlayer = {
@@ -96,7 +96,9 @@ describe('players', () => {
   })
 
 
-  it('Должен выдать ошибку', () => {
+  it('Should not change the list of players', () => {
+    const consoleError = console.error;
+    console.error = jest.fn();
     fakePlayers.forEach((item) => STORE.dispatch(PlayersStateActions.addPlayer(item)));
 
     const changedPlayer = {
@@ -104,12 +106,10 @@ describe('players', () => {
       id: 'new id'
     };
 
-    try {
-      STORE.dispatch(PlayersStateActions.changePlayer(changedPlayer));
-    } catch (e) {
-      expect(e.message).toEqual(`Player with id "${changedPlayer.id}" not found`);
-    }
+    STORE.dispatch(PlayersStateActions.changePlayer(changedPlayer));
+    expect(console.error).toHaveBeenLastCalledWith(`Player with id "${changedPlayer.id}" not found`);
 
+    console.error = consoleError;
   });
 
 })

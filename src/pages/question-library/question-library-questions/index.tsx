@@ -19,7 +19,7 @@ export const QuestionLibraryQuestionsPage = () => {
 
   React.useEffect(() => {
     dispatch(fetchQuestionListAction());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

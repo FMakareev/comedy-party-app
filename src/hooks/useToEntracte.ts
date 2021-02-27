@@ -18,8 +18,7 @@ export const useToEntracte = ({endLink, entracteLink}: Props) => {
 
   const {push} = useHistory();
 
-  const toEntracte = useCallback(() => {
-    console.log(currentRound);
+  return useCallback(() => {
     if (currentQuestionIndex === gameQuestions.length - 1 && currentRound + 1 === gameConfig.roundsCount) {
       push(endLink)
       return;
@@ -27,7 +26,5 @@ export const useToEntracte = ({endLink, entracteLink}: Props) => {
     if (currentQuestionIndex === gameQuestions.length - 1) {
       push(entracteLink);
     }
-  }, [push, currentQuestionIndex, gameQuestions.length, currentRound, gameConfig.roundsCount])
-
-  return toEntracte;
+  }, [push, currentQuestionIndex, gameQuestions.length, currentRound, gameConfig.roundsCount, endLink, entracteLink]);
 }

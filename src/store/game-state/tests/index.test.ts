@@ -25,7 +25,9 @@ describe('gameState', () => {
     store.dispatch(gameState.actions.addPlayers({
       players
     }) as any)
-    expect(gameStateSelectors.getGamePlayers(store.getState() as any)).toEqual(players);
+    expect(gameStateSelectors.getGamePlayers(store.getState() as any)).toEqual({
+      players,
+    });
   })
 
   it('nextAttempts', () => {
@@ -47,17 +49,13 @@ describe('gameState', () => {
     const store = createMockStore();
     expect(gameStateSelectors.getGameId(store.getState() as any)).toEqual(null);
     store.dispatch(gameState.actions.createNewGame({}) as any)
-
     expect(gameStateSelectors.getGameId(store.getState() as any)).toEqual(expect.any(String));
   })
 
   it('addGameQuestions', () => {
     const store = createMockStore();
 
-    store.dispatch(gameState.actions.addGameQuestions({
-      gameQuestions: [1,2,3,4,5]
-    }) as any)
-
+    store.dispatch(gameState.actions.addGameQuestions([1,2,3,4,5]) as any)
     expect(gameStateSelectors.getGameQuestions(store.getState() as any)).toEqual([1,2,3,4,5]);
     expect(gameStateSelectors.getCurrentQuestion(store.getState() as any)).toEqual(1);
   })
@@ -65,10 +63,7 @@ describe('gameState', () => {
   it('nextQuestion', () => {
     const store = createMockStore();
     const gameQuestions = [1,2,3,4,5];
-    store.dispatch(gameState.actions.addGameQuestions({
-      gameQuestions: gameQuestions
-    }) as any)
-
+    store.dispatch(gameState.actions.addGameQuestions(gameQuestions) as any)
     gameQuestions.forEach((question) => {
       expect(gameStateSelectors.getCurrentQuestion(store.getState() as any)).toEqual(question);
       store.dispatch(gameState.actions.nextQuestion({}) as any);
@@ -84,9 +79,7 @@ describe('gameState', () => {
       getRandomPlayer(),
     ];
     const store = createMockStore();
-    store.dispatch(gameState.actions.addPlayers({
-      players
-    }) as any)
+    store.dispatch(gameState.actions.addPlayers(players) as any)
 
     expect(gameStateSelectors.getGameCurrentPlayer(store.getState() as any)).toEqual(players[0]);
     expect(gameStateSelectors.getGameCurrentPlayerIndex(store.getState() as any)).toEqual(0);

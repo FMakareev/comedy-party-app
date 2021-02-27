@@ -1,8 +1,8 @@
 import React from 'react';
 import {Form} from "react-final-form";
 import arrayMutators from "final-form-arrays";
-import {FORM_ERROR, FormApi, SubmissionErrors} from "final-form";
-import {Player} from "../../types";
+import {FORM_ERROR} from "final-form";
+import {FinalOnSubmit, Player} from "../../types";
 import {GameConfig} from "../../store/game-state/reducer";
 import {FormSettingsRender} from "../FormSettingsRender/FormSettingsRender";
 
@@ -23,15 +23,7 @@ const validate = (values: FormSettingsValues) => {
 type Props = {
   onClickBack(): void;
   initialValues: FormSettingsValues;
-  onSubmit: (
-    values: FormSettingsValues,
-    form: FormApi<FormSettingsValues, any>,
-    callback?: (errors?: SubmissionErrors) => void
-  ) =>
-    | SubmissionErrors
-    | Promise<SubmissionErrors | undefined>
-    | undefined
-    | void
+  onSubmit: FinalOnSubmit<FormSettingsValues, any>;
 }
 
 export const FormSettings: React.FC<Props> = (

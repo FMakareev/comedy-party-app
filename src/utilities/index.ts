@@ -1,11 +1,11 @@
-import {Player, PlayerScore, Question, QuestionTag} from "../types";
+import {Maybe, Player, PlayerScore, Question, QuestionTag} from "../types";
 
 
 export const questionCompareByTag = (category: QuestionTag) => (question: Question) => question.category === category;
 
-export const playerCompareById = (playerId: string) => (player: Player) => playerId === player.id;
+export const playerCompareById = (playerId: Maybe<string>) => (player: Player) => playerId === player.id;
 
-export const playerScoreCompareByPlayerId = (playerId: string) =>  ({player}: PlayerScore) => playerCompareById(playerId)(player)
+export const playerScoreCompareByPlayerId = (playerId: Maybe<string>) =>  ({player}: PlayerScore) => playerCompareById(playerId)(player)
 
 export const playerScoreCompareByScore = (prev: PlayerScore, next: PlayerScore): number => {
   if (prev.score === next.score) {

@@ -17,7 +17,3 @@ export const questionsStateSelectors = {
   getQuestions,
   getQuestionsByTag,
 }
-
-
-// @ts-ignore
-window.questionsStateSelectors = questionsStateSelectors;

@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction, SliceCaseReducers} from '@reduxjs/toolkit'
 import {has} from 'lodash';
 import {SCORE_TABLE_REDUCER_NAME} from "./const";
-import {GameScore, Player, PlayerScore} from '../../types';
+import {GameScore, Maybe, Player, PlayerScore} from '../../types';
 import {playerScoreCompareByPlayerId} from "../../utilities";
 
 
@@ -17,7 +17,7 @@ const initialState = {
 
 export type ScoreTableStateActions = {
   setGameScore: (props: {
-    gameId: string;
+    gameId: Maybe<string>;
     player: Player;
     score: number;
   }) => any;

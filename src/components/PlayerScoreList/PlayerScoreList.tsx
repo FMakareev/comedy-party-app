@@ -1,13 +1,13 @@
 import React from 'react';
 import {IonCol, IonGrid, IonRow} from "@ionic/react";
-import {Player} from "../../types";
+import {Maybe, Player} from "../../types";
 import {CardPlayer, CardPlayerTypeEnum} from "../CardPlayer";
 import {scoreTableStateSelectors} from "../../store/scoreTable/selectors";
 import {useSelector} from "react-redux";
 import {playerScoreCompareByPlayerId} from "../../utilities";
 
 type Props = {
-  gameId: string;
+  gameId: Maybe<string>;
   players: Player[];
 }
 

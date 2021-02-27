@@ -1,5 +1,5 @@
 import React from 'react';
-import {IonCol, IonGrid, IonRow, IonLabel, IonInput} from "@ionic/react";
+import {IonCol, IonGrid, IonRow, IonLabel} from "@ionic/react";
 import {useField} from "react-final-form";
 import {get} from 'lodash';
 

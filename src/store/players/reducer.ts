@@ -46,8 +46,9 @@ export const playersState = createSlice<State, SliceCaseReducers<State>, string>
     changePlayer: (state: State, action: PayloadAction<Player>) => {
       const player = state.players.findIndex((item) => item.id === action.payload.id);
 
-      if (player === undefined) {
-        throw new Error(`Player with id "${action.payload.id}" not found`);
+      if (player === -1) {
+        console.error(`Player with id "${action.payload.id}" not found`);
+        return;
       }
       state.players[player] = action.payload;
     },

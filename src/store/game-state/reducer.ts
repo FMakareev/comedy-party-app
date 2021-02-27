@@ -16,7 +16,7 @@ export type GameConfig = {
 
 export type State = {
   gameConfig: GameConfig;
-  gameId: string;
+  gameId: string | null;
   players: Player[];
 
   currentPlayer: number;
@@ -30,14 +30,14 @@ export type State = {
   showAnswer: boolean;
 }
 
-const initialState = {
+export const gameStateInitialState = {
   gameConfig: {
     playerAttempts: 3,
     roundsCount: 2,
-    questionCountInRound: 10,
+    questionCountInRound: 2,
     isStartWithLowPoints: true,
   },
-  gameId: nanoid(),
+  gameId: null,
   players: [],
   currentPlayer: 0,
   playerAttempts: 3,
@@ -52,34 +52,35 @@ const initialState = {
 }
 
 export type GameStateActions = {
-  createNewGame: () => any;
-  addPlayers: (players: Player[]) => any;
-  setNewGameConfig: (config: GameConfig) => any;
-  addGameQuestions: (gameQuestions: Question[]) => any;
-  changeTheme: (newTheme: QuestionTag) => any;
-  changeCurrentPlayer: (playerIndex: number) => any;
-  nextQuestion: () => any;
-  nextRound: () => any;
-  nextAttempts: () => any;
-  resetAttempts: () => any;
-  nextPlayer: () => any;
-  changeShowAnswer: (isShow: boolean) => any;
+  createNewGame: () => void;
+  addPlayers: (players: Player[]) => void;
+  setNewGameConfig: (config: GameConfig) => void;
+  addGameQuestions: (gameQuestions: Question[]) => void;
+  changeTheme: (newTheme: QuestionTag) => void;
+  changeCurrentPlayer: (playerIndex: number) => void;
+  nextQuestion: () => void;
+  nextRound: () => void;
+  nextAttempts: () => void;
+  resetAttempts: () => void;
+  resetCurrentQuestion: () => void;
+  nextPlayer: () => void;
+  changeShowAnswer: (isShow: boolean) => void;
 }
 
 export const gameState = createSlice<State, SliceCaseReducers<State>, string>({
   name: GAME_STATE_REDUCER_NAME,
-  initialState: initialState,
+  initialState: gameStateInitialState,
   reducers: {
     createNewGame: (state: State) => {
       state.gameId = nanoid();
-      state.players = initialState.players;
-      state.currentPlayer = initialState.currentPlayer;
-      state.playerAttempts = initialState.playerAttempts;
-      state.currentQuestion = initialState.currentQuestion;
-      state.currentRound = initialState.currentRound;
-      state.themeHistory = initialState.themeHistory;
-      state.gameQuestions = initialState.gameQuestions;
-      state.showAnswer = initialState.showAnswer;
+      state.players = gameStateInitialState.players;
+      state.currentPlayer = gameStateInitialState.currentPlayer;
+      state.playerAttempts = gameStateInitialState.playerAttempts;
+      state.currentQuestion = gameStateInitialState.currentQuestion;
+      state.currentRound = gameStateInitialState.currentRound;
+      state.themeHistory = gameStateInitialState.themeHistory;
+      state.gameQuestions = gameStateInitialState.gameQuestions;
+      state.showAnswer = gameStateInitialState.showAnswer;
     },
 
     setNewGameConfig: (state: State, {payload}: PayloadAction<GameConfig> )=> {
@@ -123,6 +124,10 @@ export const gameState = createSlice<State, SliceCaseReducers<State>, string>({
 
     resetAttempts: (state: State) => {
       state.playerAttempts = state.gameConfig.playerAttempts;
+    },
+
+    resetCurrentQuestion: (state: State) => {
+      state.currentQuestion = 0;
     },
 
     changeCurrentPlayer: (state: State, {payload}: PayloadAction<number>) => {

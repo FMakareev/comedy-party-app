@@ -6,7 +6,7 @@ import {playerScoreCompareByPlayerId} from "../../utilities";
 
 const getCurrentGameState = (state: any) => state[SCORE_TABLE_REDUCER_NAME];
 
-const getPlayersScore = (gameId?: string) => createSelector(getCurrentGameState, (state): Maybe<PlayerScore[]> => {
+const getPlayersScore = (gameId?: Maybe<string>) => createSelector(getCurrentGameState, (state): Maybe<PlayerScore[]> => {
   if ((!gameId) || (gameId && !has(state.gameMap, [gameId]))) {
     return null;
   }
@@ -14,7 +14,7 @@ const getPlayersScore = (gameId?: string) => createSelector(getCurrentGameState,
 })
 const getPlayerScoreById = (gameId?: string, playerId?: string) =>
   createSelector(getPlayersScore(gameId), (players): Maybe<PlayerScore> => {
-    return players && playerId && players.find(playerScoreCompareByPlayerId(playerId)) || null;
+    return players?.find(playerScoreCompareByPlayerId(playerId));
   })
 
 export const scoreTableStateSelectors = {

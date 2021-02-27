@@ -8,7 +8,7 @@ import {playerScoreCompareByPlayerId, playerCompareById} from '../../utilities';
 import cn from 'classnames';
 
 type Props = {
-  gameId: string;
+  gameId: Maybe<string>;
   players: Player[];
 
   selected: Maybe<Player[]>;

@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {gameStateSelectors} from "../../../store/game-state/selectors";
 import {QuestionCard} from "../../../components/QuestionCard/QuestionCard";
 import {PlayerListAddScore} from '../../../components/PlayerListAddScore/PlayerListAddScore';
-import {useMountTheme} from '../../../hooks/useMountTheme';
+import {useMountThemeAndQuestions} from '../../../hooks/useMountThemeAndQuestions/useMountThemeAndQuestions';
 import {BigRoundCounter} from "../../../components/BigRoundCounter/BigRoundCounter";
 import {CleverestFooter} from '../../../components/CleverestFooter';
 import { useSelected } from '../../../hooks/useSelected';
@@ -30,7 +30,7 @@ export const RoundPage = () => {
 
   const { selected, onSelect, onReset } = useSelected<Player>({isMultipleSelect: true});
 
-  useMountTheme(tag);
+  useMountThemeAndQuestions({theme:tag});
 
   useEffect(() => {
     if (Array.isArray(selected)) {

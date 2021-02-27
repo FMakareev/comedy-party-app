@@ -1,5 +1,6 @@
 import {Question, QuestionTag} from "../../../../types";
-import {random, slice} from 'lodash';
+import {slice} from 'lodash';
+import random from 'lodash/random';
 
 const notIncludes = (targetArray: any[]) => (item: any) => !targetArray.includes(item)
 

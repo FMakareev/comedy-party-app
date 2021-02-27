@@ -1,10 +1,6 @@
 import React from 'react';
 import {Header} from "../Header";
 import {IonButton, IonCol, IonContent, IonGrid, IonRow, IonText} from "@ionic/react";
-import {FieldArray} from "react-final-form-arrays";
-import {CardPlayer} from "../CardPlayer";
-import {CardAddPlayer} from "../CardAddPlayer";
-import {getRandomPlayer} from "../../mocks/getRandomPlayer";
 import {Footer} from "../Footer/Footer";
 import {FormRenderProps} from "react-final-form";
 import { PlayerListEdit } from '../PlayerListEdit/PlayerListEdit';

@@ -37,6 +37,6 @@ export const BlitzSettingsPage = () => {
         push('/game/blitz/round');
       }
     }}
-    onClickBack={() =>  push('/')}
+    onClickBack={() => push('/')}
   />
 };

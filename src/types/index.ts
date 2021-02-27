@@ -1,9 +1,12 @@
+import {FormApi, SubmissionErrors} from "final-form";
+
 export enum QuestionTag {
   QUOTE = 'QUOTE',
   FACT = 'FACT',
   POEM = 'POEM',
   LAW = 'LAW'
 }
+
 /** @deprecated */
 export type Task = {
   id?: string;
@@ -49,3 +52,12 @@ export type AnyProps = {
 }
 
 export type Maybe<T> = T | null | undefined;
+
+export type FinalOnSubmit<FormValues, InitialFormValues> = (
+  values: FormValues,
+  form: FormApi<FormValues, InitialFormValues>,
+  callback?: (errors?: SubmissionErrors) => void
+) => SubmissionErrors
+  | Promise<SubmissionErrors | undefined>
+  | undefined
+  | void
